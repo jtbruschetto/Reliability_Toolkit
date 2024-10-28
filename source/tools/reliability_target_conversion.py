@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from numpy import linspace
 from scipy.optimize import curve_fit
+from scipy.interpolate import UnivariateSpline
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
@@ -83,7 +84,7 @@ class MRpTVAtYear:
 
     def __post_init__(self):
         self.mrr = self.mrptv / 1_000
-        self.eta = eta_mrr_optimization(beta=self.beta, mrr_year=self.mrptv_year, mrr_desired=self.mrr, gamma=0, mode=self.mode, show_plot=True)
+        self.eta = eta_mrr_optimization(beta=self.beta, mrr_year=self.mrptv_year, mrr_desired=self.mrr, gamma=self.gamma, mode=self.mode)
         self.reliability_table = calculate_reliability_from_mrr(beta=self.beta, eta=self.eta, gamma=self.gamma, mode=self.mode)
         self.reliability_table = self.reliability_table.join(calculate_unreliability_by_year(beta=self.beta, eta=self.eta, gamma=self.gamma))
         self.reliability_table = self.reliability_table.join(calculate_failure_rate_by_year(beta=self.beta, eta=self.eta, gamma=self.gamma))
@@ -309,6 +310,12 @@ def calculate_reliability_at_year_from_mrr(beta: float, eta: float, year=10,  ga
     return output.at[year, 'Reliability_at_year']
 
 
+def linear_estimator(x1, x2, y1, y2, x_desired):
+    coefficients = np.polyfit([x1, x2],
+                              [y1, y2], 1)
+    return (x_desired - coefficients[1]) / coefficients[0]
+
+
 def eta_mrr_optimization(beta, mrr_year, mrr_desired, gamma=0, quantity=1000000000,
                          mode: Literal['at_year', 'upto_year'] = 'upto_year',
                          show_plot=False, **_kwargs):
@@ -323,176 +330,81 @@ def eta_mrr_optimization(beta, mrr_year, mrr_desired, gamma=0, quantity=10000000
     :param show_plot: Boolean Option to Show Eta Optimization
     :return:
     """
-    optimization_dict = {
-        1000: 300,
-        100: 150,
-        50: 100,
-        1: 50,
-        0.1: 15,
-        0.05: 5,
-        0.01: 1,
-        0.0025: 0.5,
-        0: .1
-    }
-    eta = 25
-    mrr_eval = 0
-    past_eval = 100000
-    mrr = []
-    eta_range = []
+
     mrr_col = 'MRR_' + mode
-
-    '''
-    Notes:
-        start by running initial guess - mrr_eval
-        compare to mrr_desired
-    '''
-    while abs(mrr_eval - mrr_desired) / mrr_desired >= 0.001:
-        output = calculate_reliability_from_mrr(beta=beta, eta=eta, mrr_year=mrr_year, gamma=gamma, quantity=quantity, mode=mode)
-        mrr_eval = output.at[mrr_year, mrr_col]
-        mrr.append(mrr_eval)
-        eta_range.append(eta)
-        pres_eval = abs(mrr_eval - mrr_desired) / mrr_desired
-        # print(f'Eta = {eta} | Eval Loop: {pres_eval} | ({mrr_eval} - {mrr_desired}) / {mrr_desired}')
-        # print(f'present_eval: {pres_eval}')
-
-
-        eta_modifier = [x for x in optimization_dict.keys() if x < pres_eval][0]
-        # print(f'eta_modifier: {eta_modifier}')
-        eta += optimization_dict[eta_modifier]
-
-        if past_eval < pres_eval:
-            break
-        past_eval = pres_eval
-
-    output = calculate_reliability_from_mrr(beta=beta, eta=eta, gamma=gamma, quantity=quantity, mode=mode)
-    mrr.append(output.at[mrr_year,mrr_col])
-    eta_range.append(eta)
-
-    df = pd.DataFrame({'eta': eta_range, mrr_col: mrr})
-    # print(df)
-    df_closest = df.iloc[(df[mrr_col] - mrr_desired).abs().argsort()[:1]]
-
-    if show_plot:
-        mrr_plot = df.plot(x='eta', y=f'MRR_{mode}', marker='o', logy=True,
-                           title='Eta selection for desired MRR target')
-        mrr_plot.axhline(y=mrr_desired, color='r')
-        mrr_plot.set_ylabel('MRR (log scale)')
-        mrr_plot.text(x=min(eta_range), y=mrr_desired, s=mrr_desired, horizontalalignment='left',
-                      verticalalignment='bottom')
-        plt.show()
-
-    # print(f'Optimized Eta: {df_closest['eta'].values[0]}')
-
-    return df_closest['eta'].values[0]
-
-
-def eta_mrr_optimization_trial(beta, mrr_year, mrr_desired, gamma=0, quantity=1000000000,
-                         mode: Literal['at_year', 'upto_year'] = 'upto_year',
-                         show_plot=False, **_kwargs):
-    """
-
-    :param beta: Weibull Shape Parameter
-    :param gamma: Weibull Location Parameter (preset=0)
-    :param mrr_year: MRR Target Year (10 years)
-    :param mrr_desired: MRR Desired Target at Specified Year
-    :param mode: MRR_at_year / MRR_upto_year
-    :param quantity: Build Quantity (Placeholder)
-    :param show_plot: Boolean Option to Show Eta Optimization
-    :return:
-    """
-
-
+    _kwargs = {
+        'beta': beta,
+        'mrr_year': mrr_year,
+        'mrr_desired': mrr_desired,
+        'gamma': gamma,
+        'quantity': quantity,
+        'mode': mode
+    }
     eta_dict = {}
     eta = 10
     # Increase eta until mrr_desired is met
     while True:
-        eta_dict[eta] = calculate_reliability_from_mrr(beta=beta, eta=eta, mrr_year=mrr_year, gamma=gamma, quantity=quantity, mode=mode).at[mrr_year, 'MRR_' + mode]
+        eta_dict[eta] = calculate_reliability_from_mrr(eta=eta, **_kwargs).at[mrr_year, mrr_col]
         if eta_dict[float(eta)] <= mrr_desired:
             break
         else:
             eta *= 10
+    # print(eta_dict)
 
-    # Increase Inspection Points between last two eta values
-    for eta in linspace(list(eta_dict.keys())[-2], list(eta_dict.keys())[-1], 10, endpoint=True):
-        eta_dict[eta] = calculate_reliability_from_mrr(beta=beta, eta=eta, mrr_year=mrr_year, gamma=gamma, quantity=quantity,
-                                         mode=mode).at[mrr_year, 'MRR_' + mode]
+    # While Loop with linear estimation between last two eta values
+    i=0
+    while True:
+        # Safeguard against infinite loop
+        if 1 > 100:
+            break
+
+        # Determine current eta bounds
+        eta_upper_bound = list({k: v for k, v in sorted(eta_dict.items()) if v < mrr_desired}.keys())[0]
+        eta_lower_bound = list({k: v for k, v in sorted(eta_dict.items()) if v > mrr_desired}.keys())[-1]
+
+        # Break Condition
+        if abs(eta_dict[eta_upper_bound] - mrr_desired) < 1e-10:
+            break
+
+        # Linear Estimator
+        eta_est = linear_estimator(
+            x1=eta_lower_bound, x2=eta_upper_bound,
+            y1=eta_dict[eta_lower_bound], y2=eta_dict[eta_upper_bound],
+            x_desired=mrr_desired)
+
+        # Incase eta estimate is closer to upper bound, set new lower bound at 1/3 eta window
+        if (eta_est-eta_lower_bound)/(eta_upper_bound-eta_lower_bound) > .5:
+            eta_mid = (eta_upper_bound-eta_lower_bound)/3 + eta_lower_bound
+            eta_dict[eta_mid] = calculate_reliability_from_mrr(eta=eta_mid, **_kwargs).at[mrr_year, 'MRR_' + mode]
+        eta_dict[eta_est] = calculate_reliability_from_mrr(eta=eta_est, **_kwargs).at[mrr_year, 'MRR_' + mode]
+
+        # Increment Loop Counter
+        i += 1
+
+    #Sort eta dictionary
     sorted_keys = list(eta_dict.keys())
     sorted_keys.sort()
     eta_dict = {i: eta_dict[i] for i in sorted_keys}
 
-    eta_upper_bound = list({ k: v for k, v in eta_dict.items() if v < mrr_desired }.keys())[0]
-    eta_lower_bound = list({ k: v for k, v in eta_dict.items() if v > mrr_desired }.keys())[-1]
+    #Get closest eta estimate
+    eta_est = list({k: v for k, v in sorted(eta_dict.items()) if v < mrr_desired}.keys())[0]
+    # print(f'eta_est: {eta_est}, mrr_est = {eta_dict[eta_est]} | mrr_delta = {eta_dict[eta_est] - mrr_desired}')
 
-    print(eta_upper_bound, eta_lower_bound)
-
-    sensitivity = eta_upper_bound - eta_lower_bound
-    print(sensitivity)
-
-    optimization_dict = {
-        sensitivity: .25*sensitivity,
-        sensitivity * 0.5: .1*sensitivity,
-        sensitivity * 0.1: .05*sensitivity,
-        sensitivity * 0.01: 0.005*sensitivity,
-        sensitivity * 0.001: 0.0001 * sensitivity,
-        0: .1
-    }
-    eta = eta_lower_bound
-    mrr_eval = 0
-    past_eval = 100000
-    mrr = []
-    eta_range = []
-    mrr_col = 'MRR_' + mode
-    attempts = 0
-
-    '''
-    Notes:
-        start by running initial guess - mrr_eval
-        compare to mrr_desired
-    '''
-    while abs(mrr_eval - mrr_desired) / mrr_desired >= 0.001:
-        output = calculate_reliability_from_mrr(beta=beta, eta=eta, mrr_year=mrr_year, gamma=gamma, quantity=quantity, mode=mode)
-        mrr_eval = output.at[mrr_year, mrr_col]
-        mrr.append(mrr_eval)
-        eta_range.append(eta)
-        pres_eval = abs(mrr_eval - mrr_desired) / mrr_desired * sensitivity
-        print(f'Eta = {eta} | Eval Loop: {pres_eval} | ({mrr_eval} - {mrr_desired}) / {mrr_desired}')
-        # print(f'present_eval: {pres_eval}')
-
-
-        eta_modifier = [x for x in optimization_dict.keys() if x < pres_eval][0]
-        print(f'eta_modifier: {eta_modifier}')
-        eta += optimization_dict[eta_modifier]
-
-        if past_eval < pres_eval:
-            break
-        past_eval = pres_eval
-
-        attempts += 1
-        if attempts > 100:
-            break
-
-    output = calculate_reliability_from_mrr(beta=beta, eta=eta, gamma=gamma, quantity=quantity, mode=mode)
-    mrr.append(output.at[mrr_year,mrr_col])
-    eta_range.append(eta)
-
-    df = pd.DataFrame({'eta': eta_range, mrr_col: mrr})
-    # print(df)
-    df_closest = df.iloc[(df[mrr_col] - mrr_desired).abs().argsort()[:1]]
-
+    # Plotting
     if show_plot:
-        print(df_closest['eta'].values[0])
-        print(df_closest[mrr_col].values[0])
-        mrr_plot = df.plot(x='eta', y=f'MRR_{mode}', marker='o', logy=True,
+        df = pd.DataFrame.from_dict(eta_dict, orient='index')
+        df.index.name = 'eta'
+        df.columns = ['MRR_' + mode]
+        mrr_plot = df.plot( y=f'MRR_{mode}', marker='o', logy=True,
                            title='Eta selection for desired MRR target')
         mrr_plot.axhline(y=mrr_desired, color='r')
         mrr_plot.set_ylabel('MRR (log scale)')
-        mrr_plot.text(x=min(eta_range), y=mrr_desired, s=mrr_desired, horizontalalignment='left',
+        mrr_plot.set_ylim([mrr_desired-0.001, mrr_desired+0.001])
+        mrr_plot.text(x=min(df.index), y=mrr_desired, s=mrr_desired, horizontalalignment='left',
                       verticalalignment='bottom')
         plt.show()
 
-    # print(f'Optimized Eta: {df_closest['eta'].values[0]}')
-
-    return df_closest['eta'].values[0]
+    return eta_est
 
 
 # # Define the exponential decay function
@@ -539,5 +451,5 @@ if __name__ == '__main__':
     # print('MRR Summary from Reliability')
     # print(mrr_df)
     #
-    eta_from_mrr = eta_mrr_optimization_trial(mrr_desired=0.0001, mrr_year=3, beta=.5, show_plot=True)
+    eta_from_mrr = eta_mrr_optimization(mrr_desired=0.0001, mrr_year=3, beta=.5, show_plot=True)
     print(f'Optimized Eta: {eta_from_mrr}')
