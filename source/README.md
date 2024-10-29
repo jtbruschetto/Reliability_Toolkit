@@ -40,21 +40,21 @@ The Coffin Manson Accelerated Reliability Model is used for Temperature Cycling 
 **Function Name:** `coffin_manson_acceleration_factor`
 
 **Function Equation:**
- $$AF = (\delta T_{acc} / \delta T_{use}) ^{cm_{exp}}$$
+$$AF = (\delta T_{acc} / \delta T_{use}) ^{cm_{exp}}$$
 
 **Input Parameters:**
 
 | Parameter    | Description |
 |--------------| ----------- |
-| $$\delta T_{acc}$$ | Temperature delta exercised in the accelerated test |
-| $$\delta T_{use}$$ | Temperature delta seen in the field |
-| $$cm_{exp}$$ | Coffin Manson Exponent |
+|$$\delta T_{acc}$$ | Temperature delta exercised in the accelerated test |
+|$$\delta T_{use}$$ | Temperature delta seen in the field |
+|$$cm_{exp}$$ | Coffin Manson Exponent |
 
 **Output:**
 
 | Variable | Description |
 |----------| ----------- |
-| $$AF$$   | Acceleration Factor |
+|$$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -72,15 +72,15 @@ The Coffin Manson Equivalent Cycle Conversion is used for converting a stress di
 Convert a dictionary of temperature delta's and counts to equivalent number of cycles at a given stress set point
 
 **Function Equation:**
-$$ Equivalent Cycles = \sum_{i=1}^{n} \frac{Count_{i}}{(\delta T_{eval} / \delta T_{i}) ^{cm_{exp}}} $$
+$$ Equivalent Cycles = \sum_{i=1}^{n} \frac{Count_{i}}{(\delta T_{eval} / \delta T_{i}) ^{cm_{exp}}}$$
 
 **Input Parameters:**
 
 | Parameter    | Description                                                                       |
 |--------------|-----------------------------------------------------------------------------------|
-| $$cycles$$   | Dictionary of temperature delta's and counts { $\delta$T as Key: Count as Value } |
-| $$\delta T_{eval}$$ | Stress Set Point for evaluation                                                   |
-| $$cm_{exp}$$ | Coffin Manson Exponent                                                            |
+|$$cycles$$   | Dictionary of temperature delta's and counts { $\delta$T as Key: Count as Value } |
+|$$\delta T_{eval}$$ | Stress Set Point for evaluation                                                   |
+|$$cm_{exp}$$ | Coffin Manson Exponent                                                            |
 
 
 **Example:**
@@ -107,15 +107,15 @@ $$AF = \exp(\frac{-EA}{k}(\frac{1}{T_{use}+ 273.15} - \frac{1}{T_{acc}+ 273.15})
 
 | Parameter    | Description |
 |--------------| ----------- |
-| $$EA$$       | Activation Energy (ev) |
-| $$T_{acc}$$  | Test Temperature (°C) |
-| $$T_{use}$$  | Field Temperature (°C) |
+|$$EA$$       | Activation Energy (ev) |
+|$$T_{acc}$$  | Test Temperature (°C) |
+|$$T_{use}$$  | Field Temperature (°C) |
 
 **Output:**
 
 | Variable | Description |
 |----------| ----------- |
-| $$AF$$   | Acceleration Factor |
+|$$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -132,15 +132,21 @@ arrhenius_acceleration_factor(ea=40, t_acc=0, t_use=57)
 Convert a dictionary of temperature's and time at temperature in hours to equivalent number of hours at a given stress set point
 
 **Function Equation:**
-$$Equivalent Hours=\sum_{i=1}^{n}\frac{Hours_{i}}{\exp(\frac{-EA}{k}(\frac{1}{T_{i}+273.15}-\frac{1}{T_{eval}+273.15}))}$$
+$$H_{equivalent}=\sum_{i=1}^{n}\frac{Hours_{i}}{\exp(\frac{-EA}{k}(\frac{1}{T_{i}+273.15}-\frac{1}{T_{eval}+273.15}))}$$
 
 **Input Parameters:**
 
 | Parameter    | Description                                     |
 |--------------|-------------------------------------------------|
-| $$hours$$    | Dictionary of temperature's and time at temperature in hours { Temperature as Key: Time at Temperature in Hours as Value } |
-| $$T_{eval}$$ | Stress Set Point for evaluation                 |
-| $$EA$$       | Activation Energy (ev)                          |
+|$$hours$$    | Dictionary of temperature's and time at temperature in hours { Temperature as Key: Time at Temperature in Hours as Value } |
+|$$T_{eval}$$ | Stress Set Point for evaluation                 |
+|$$EA$$       | Activation Energy (ev)                          |
+
+**Output:**
+
+| Variable | Description |
+|----------| ----------- |
+|$$H_{equivalent}$$   | Equivalent Number of Hours |
 
 **Example:**
 
@@ -166,15 +172,15 @@ $$AF = \frac{S_{use}}{S_{acc}}^{n}$$
 
 | Parameter    | Description |
 |--------------| ----------- |
-| $$S_{acc}$$  | Accelerated Test S |
-| $$S_{use}$$  | Normal Operating/Field Stress S |
-| $$n$$        | Model Exponent |
+|$$S_{acc}$$  | Accelerated Test S |
+|$$S_{use}$$  | Normal Operating/Field Stress S |
+|$$n$$        | Model Exponent |
 
 **Output:**
 
 | Variable | Description |
 |----------| ----------- |
-| $$AF$$   | Acceleration Factor |
+|$$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -188,23 +194,23 @@ inverse_power_law_acceleration_factor(s_acc=100, s_use=50, n=2)
 **Function Name:** `peck_acceleration_factor`
 
 **Function Equation:**
-$$ AF = \frac{RH_{use}}{RH_{acc}} * \exp(\frac{-EA}{k}(\frac{1}{T_{use}+ 273.15} - \frac{1}{T_{acc}+ 273.15})) $$
+$$AF = \frac{RH_{use}}{RH_{acc}} * \exp(\frac{-EA}{k}(\frac{1}{T_{use}+ 273.15} - \frac{1}{T_{acc}+ 273.15}))$$
 
 **Input Parameters:**
 
 | Parameter    | Description |
 |--------------| ----------- |
-| $$EA$$       | Activation Energy (ev) |
-| $$T_{acc}$$  | Test Temperature (°C) |
-| $$T_{use}$$  | Field Temperature (°C) |
-| $$RH_{use}$$ | Field Relative Humidity (%) |
-| $$RH_{acc}$$ | Test Relative Humidity (%) |
+|$$EA$$       | Activation Energy (ev) |
+|$$T_{acc}$$  | Test Temperature (°C) |
+|$$T_{use}$$  | Field Temperature (°C) |
+|$$RH_{use}$$ | Field Relative Humidity (%) |
+|$$RH_{acc}$$ | Test Relative Humidity (%) |
 
 **Output:**
 
 | Variable | Description |
 |----------| ----------- |
-| $$AF$$   | Acceleration Factor |
+|$$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -221,7 +227,7 @@ peck_acceleration_factor(ea=40, t_acc=85, t_use=40, rh_use=.50, rh_acc=.95)
 **Function Name:** `calculate_reliability`
 
 **Equation:**
-$$ R = \exp(\frac{-\chi^2_{CI, 2f+2}}{2 * n * L_v^{\beta}}) $$
+$$R = \exp(\frac{-\chi^2_{CI, 2f+2}}{2 * n * L_v^{\beta}})$$
 
 **Input Parameters:**
 
@@ -251,7 +257,7 @@ calculate_reliability(ci=0.95, f=2, n=100, lv=1, beta=2)
 **Function Name:** `calculate_confidence`
 
 **Equation:**
-$$ CI = \chi^2_{-2 * n * L_v^{\beta} *\log(R), 2f+2}  $$
+$$CI = \chi^2_{-2 * n * L_v^{\beta} *\log(R), 2f+2}$$
 
 **Input Parameters:**
 
@@ -279,7 +285,7 @@ calculate_confidence(f=2, n=100, lv=1, beta=2)
 **Function Name:** `calculate_sample_size`
 
 **Equation:**
-$$ n = \frac{\chi^2_{CI, 2f+2}}{2 * L_v^{\beta} * \log(R)} $$
+$$n = \frac{\chi^2_{CI, 2f+2}}{2 * L_v^{\beta} * \log(R)}$$
 
 **Input Parameters:**
 
@@ -309,7 +315,7 @@ calculate_sample_size(confidence=0.95, failures=2, life_ratio=1, reliability=0.9
 **Function Name:** `calculate_life_ratio`
 
 **Equation:**
-$$ L_v = (\frac{\chi^2_{CI, 2f+2}}{2 * n * \log(R)})^{\frac{1}{\beta}} $$
+$$L_v = (\frac{\chi^2_{CI, 2f+2}}{2 * n * \log(R)})^{\frac{1}{\beta}}$$
 
 **Input Parameters:**
 
