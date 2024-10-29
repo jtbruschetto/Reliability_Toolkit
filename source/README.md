@@ -3,8 +3,8 @@
 ## Table of Contents
 1. [Summary](#summary)
 2. [Functions](#functions)
-   1. [Accelerated Reliability Models](#Accelerated Reliability)
-      1. [Coffin-Manson](#Coffin-Manson Accelerated Reliability Model)
+   1. [Accelerated Reliability Models](#Accelerated_Reliability)
+      1. [Coffin-Manson](#Coffin-Manson_Accelerated_Reliability_Model)
    2. [Classical Test Design](#Classical Test Design)
    3. [Reliability Dataclasses](#Reliability Dataclasses)
    4. [Reliability Demonstration](#Reliability Demonstration)
@@ -23,9 +23,9 @@ Reliability Toolkit is a collection of Python scripts and tools that can be used
 
 ## Reliability Toolkit Functions <a name="functions"></a>
 
-### Accelerated Reliability Models <a name="Accelerated Reliability"></a>
+### Accelerated Reliability Models <a name="Accelerated_Reliability"></a>
 
-#### Coffin Manson Accelerated Reliability Model <a name="Coffin-Manson Accelerated Reliability Model"></a>
+#### Coffin Manson Accelerated Reliability Model <a name="Coffin-Manson_Accelerated_Reliability_Model"></a>
 ##### Coffin Manson Acceleration Factor (AF) Function
 The Coffin Manson Accelerated Reliability Model is used for Temperature Cycling Tests
 
