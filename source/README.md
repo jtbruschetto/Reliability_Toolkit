@@ -132,7 +132,7 @@ arrhenius_acceleration_factor(ea=40, t_acc=0, t_use=57)
 Convert a dictionary of temperature's and time at temperature in hours to equivalent number of hours at a given stress set point
 
 **Function Equation:**
-$$ Equivalent Hours = \sum_{i=1}^{n} \frac{Hours_{i}}{\exp(\frac{-EA}{k}(\frac{1}{T_{i}+ 273.15} - \frac{1}{T_{eval}+ 273.15}))} $$
+$$Equivalent Hours=\sum_{i=1}^{n}\frac{Hours_{i}}{\exp(\frac{-EA}{k}(\frac{1}{T_{i}+273.15}-\frac{1}{T_{eval}+273.15}))}$$
 
 **Input Parameters:**
 
