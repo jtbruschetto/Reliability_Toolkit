@@ -14,7 +14,8 @@
    8. [Time Series Data Analysis](#Time Series Analysis)
    9. [Utilities](#Utilities)
 3. [Apps](#apps)
-4. [Examples](#examples)
+
+
 
 ## Reliability Toolkit Summary <a name="summary"></a>
 
@@ -116,7 +117,5 @@ coffin_manson_cycles_conversion(cycles, dt_eval=100, cm_exp=2)
 ### Classical Test Design App <a name="Classical Test Design App"></a>
 
 ### Reliability/MRpTV Conversion App <a name="Reliability/MRpTV App"></a>
-
-## Reliability Toolkit Examples <a name="examples"></a>
 
 ## Reliability Toolkit References <a name="references"></a>
