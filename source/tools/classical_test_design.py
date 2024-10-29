@@ -147,7 +147,7 @@ class ClassicalTestDesign:
             target = self.update_and_calculate_confidence(**{x_axis: x_axis_target, y_axis: y_axis_target})
             levelsf = get_range_array(target, 'confidence', levels=100)
             levelsk = get_range_array(target, 'confidence', levels=10)
-        elif contour_var == 'r_ts':
+        elif contour_var == 'reliability':
             func = np.vectorize(self.update_and_calculate_r_ts)
             z_result = f'{self.update_and_calculate_r_ts(**{x_axis: x_axis_target, y_axis: y_axis_target}):.2f}'
             target = self.update_and_calculate_r_ts(**{x_axis: x_axis_target, y_axis: y_axis_target})
@@ -230,7 +230,7 @@ def calculate_sample_size(confidence: float, beta: float, failures: int, reliabi
     :param life_ratio: Ratio of test time vs service life
     :return: Sample size
     """
-    return (-chi2.ppf(confidence, df=(2 * failures + 2))) / 2 / (life_ratio ** beta) / math.log(reliability)
+    return math.ceil((-chi2.ppf(confidence, df=(2 * failures + 2))) / 2 / (life_ratio ** beta) / math.log(reliability))
 
 
 def calculate_life_ratio(confidence: float, beta: float, failures: int, reliability: float, sample_size: int, **_kwargs):

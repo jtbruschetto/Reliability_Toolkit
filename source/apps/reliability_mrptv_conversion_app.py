@@ -2,6 +2,7 @@
 from math import gamma
 
 import ttkbootstrap as tb
+from ttkbootstrap.tableview import Tableview
 from ttkbootstrap.constants import *
 from ttkbootstrap.tooltip import ToolTip
 import tkinter as tk
@@ -81,8 +82,6 @@ class App(tb.Toplevel):
         self.beta.set(2.5)
 
     def update_reliability_table(self):
-        for item in self.rt.table.table.get_children():
-            self.rt.table.table.delete(item)
         self.reliability_calculator = self.reliability_class(
             reliability=self.reliability.get(),
             reliability_year=self.reliability_year.get(),
@@ -92,19 +91,12 @@ class App(tb.Toplevel):
         )
         print(self.reliability_calculator)
         print(self.reliability_calculator.reliability_table)
-        data_rows = self.reliability_calculator.reliability_table.round(6).itertuples(index=True, name=None)
-        for i, row in enumerate(data_rows):
-            if i % 2 == 0:
-                self.rt.table.table.insert('', 'end', values=row, tags=('evenrow',))
-            else:
-                self.rt.table.table.insert('', 'end', values=row, tags=('oddrow',))
-        self.rt.table.table.tag_configure('oddrow', background='lightgrey')
-        # self.rt.table.table.tag_configure('evenrow', background=(211, 211, 216, 0.6))
+        cols = ['Year', 'MRR', 'MRpTV', 'Reliability', 'UnReliability', 'Failure Rate']
+        self.rt.table.table.build_table_data(cols, list(self.reliability_calculator.reliability_table.round(6).itertuples(index=True, name=None)))
+        self.rt.table.table.autoalign_columns()
 
 
     def update_mrptv_table(self):
-        for item in self.mt.table.table.get_children():
-            self.mt.table.table.delete(item)
         self.mrptv_calculator = self.mrptv_class(
             mrptv=self.mrptv.get(),
             mrptv_year=self.mrptv_year.get(),
@@ -114,14 +106,10 @@ class App(tb.Toplevel):
         )
         print(self.mrptv_calculator)
         print(self.mrptv_calculator.reliability_table)
-        data_rows = self.mrptv_calculator.reliability_table.round(6).itertuples(index=True, name=None)
-        for i, row in enumerate(data_rows):
-            if i % 2 == 0:
-                self.mt.table.table.insert('', 'end', values=row, tags=('evenrow',))
-            else:
-                self.mt.table.table.insert('', 'end', values=row, tags=('oddrow',))
-        self.mt.table.table.tag_configure('oddrow', background='lightgrey')
-        # self.mt.table.table.tag_configure('evenrow', background='purple')
+        cols = ['Year', 'MRR', 'MRpTV', 'Reliability', 'UnReliability', 'Failure Rate']
+        self.mt.table.table.build_table_data(cols, list(self.mrptv_calculator.reliability_table.round(6).itertuples(index=True, name=None)))
+        self.mt.table.table.autoalign_columns()
+
 
 
 class ReliabilityTab(tb.Frame):
@@ -215,22 +203,24 @@ class DataTable(tb.Labelframe):
         self.top_level = top_level
         self.frame = frame
 
-        cols = ('Year', 'MRR', 'MRpTV', 'Reliability', 'UnReliability', 'Failure Rate')
-        self.table = tb.Treeview(self, style='primary', columns=cols, show='headings', )
-        self.table_scroll = tb.Scrollbar(self, command=self.table.yview)
+        cols = ['Year', 'MRR', 'MRpTV', 'Reliability', 'UnReliability', 'Failure Rate']
+        # self.table = tb.Treeview(self, style='primary', columns=cols, show='headings', )
+        self.table = Tableview(self, coldata=cols, bootstyle=PRIMARY, stripecolor=(top_level.style.colors.light, None), autofit=True)
+        # self.table.autofit_columns()
+        # self.table_scroll = tb.Scrollbar(self, command=self.table.yview)
 
         self.table.pack(side=LEFT, fill=BOTH, expand=False, padx=5, pady=5)
-        self.table_scroll.pack(side=RIGHT, fill=Y, expand=False, padx=5, pady=5)
+        # self.table_scroll.pack(side=RIGHT, fill=Y, expand=False, padx=5, pady=5)
 
-        self.table.column('Year', anchor='w', width=50)
-        self.table.column('MRR', anchor='w', width=100)
-        self.table.column('MRpTV', anchor='w', width=100)
-        self.table.column('Reliability', anchor='w', width=100)
-        self.table.column('UnReliability', anchor='w', width=100)
-        self.table.column('Failure Rate', anchor='w', width=100)
+        # self.table.column('Year', anchor='w', width=50)
+        # self.table.column('MRR', anchor='w', width=100)
+        # self.table.column('MRpTV', anchor='w', width=100)
+        # self.table.column('Reliability', anchor='w', width=100)
+        # self.table.column('UnReliability', anchor='w', width=100)
+        # self.table.column('Failure Rate', anchor='w', width=100)
 
-        for col in cols:
-            self.table.heading(col, anchor='w', text=col)
+        # for col in cols:
+        #     self.table.heading(col, anchor='w', text=col)
 
 
 

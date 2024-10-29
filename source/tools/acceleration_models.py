@@ -118,7 +118,9 @@ def peck_acceleration_factor(ea, n_exp,  t_use, t_acc, rh_use, rh_acc):
 
 if __name__ == '__main__':
     print(f'Coffin Manson Acceleration Factor (AF): {coffin_manson_acceleration_factor(dt_acc=140, dt_use=100, cm_exp=2):.2f}')
+
     print(f'Arrhenius Acceleration Factor (AF): {arrhenius_acceleration_factor(t_acc=110, t_use=80, ea=.5):.2f}')
+    print(f'Arrhenius Hour Conversion: {arrhenius_hours_conversion({100:1, 110:1, 120:1, 130:1, 140:1 }, 150, .5):.2f} hours')
     test_dict = {
         5: 1000,
         10: 500,
