@@ -160,7 +160,7 @@ arrhenius_hours_conversion(hours, t_eval=10, ea=.5)
 **Function Name:** `inverse_power_law_acceleration_factor`
 
 **Function Equation:**
-$$ AF = \frac{S_{use}}{S_{acc}}^{n} $$
+$$AF = \frac{S_{use}}{S_{acc}}^{n}$$
 
 **Input Parameters:**
 
