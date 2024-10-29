@@ -44,17 +44,17 @@ $$AF = (\delta T_{acc} / \delta T_{use}) ^{cm_{exp}}$$
 
 **Input Parameters:**
 
-| Parameter    | Description |
-|--------------| ----------- |
-|$$\delta T_{acc}$$ | Temperature delta exercised in the accelerated test |
-|$$\delta T_{use}$$ | Temperature delta seen in the field |
-|$$cm_{exp}$$ | Coffin Manson Exponent |
+| Parameter          | Description                                         |
+|--------------------|-----------------------------------------------------|
+| $$\delta T_{acc}$$ | Temperature delta exercised in the accelerated test |
+| $$\delta T_{use}$$ | Temperature delta seen in the field                 |
+| $$cm_{exp}$$       | Coffin Manson Exponent                              |
 
 **Output:**
 
-| Variable | Description |
-|----------| ----------- |
-|$$AF$$   | Acceleration Factor |
+| Variable | Description         |
+|----------|---------------------|
+| $$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -76,11 +76,11 @@ $$ Equivalent Cycles = \sum_{i=1}^{n} \frac{Count_{i}}{(\delta T_{eval} / \delta
 
 **Input Parameters:**
 
-| Parameter    | Description                                                                       |
-|--------------|-----------------------------------------------------------------------------------|
-|$$cycles$$   | Dictionary of temperature delta's and counts { $\delta$T as Key: Count as Value } |
-|$$\delta T_{eval}$$ | Stress Set Point for evaluation                                                   |
-|$$cm_{exp}$$ | Coffin Manson Exponent                                                            |
+| Parameter           | Description                                                                       |
+|---------------------|-----------------------------------------------------------------------------------|
+| $$cycles$$          | Dictionary of temperature delta's and counts { $\delta$T as Key: Count as Value } |
+| $$\delta T_{eval}$$ | Stress Set Point for evaluation                                                   |
+| $$cm_{exp}$$        | Coffin Manson Exponent                                                            |
 
 
 **Example:**
@@ -105,17 +105,17 @@ $$AF = \exp(\frac{-EA}{k}(\frac{1}{T_{use}+ 273.15} - \frac{1}{T_{acc}+ 273.15})
 
 **Input Parameters:**
 
-| Parameter    | Description |
-|--------------| ----------- |
-|$$EA$$       | Activation Energy (ev) |
-|$$T_{acc}$$  | Test Temperature (°C) |
-|$$T_{use}$$  | Field Temperature (°C) |
+| Parameter   | Description            |
+|-------------|------------------------|
+| $$EA$$      | Activation Energy (ev) |
+| $$T_{acc}$$ | Test Temperature (°C)  |
+| $$T_{use}$$ | Field Temperature (°C) |
 
 **Output:**
 
-| Variable | Description |
-|----------| ----------- |
-|$$AF$$   | Acceleration Factor |
+| Variable | Description         |
+|----------|---------------------|
+| $$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -136,17 +136,17 @@ $$H_{equivalent}=\sum_{i=1}^{n}\frac{Hours_{i}}{\exp(\frac{-EA}{k}(\frac{1}{T_{i
 
 **Input Parameters:**
 
-| Parameter    | Description                                     |
-|--------------|-------------------------------------------------|
-|$$hours$$    | Dictionary of temperature's and time at temperature in hours { Temperature as Key: Time at Temperature in Hours as Value } |
-|$$T_{eval}$$ | Stress Set Point for evaluation                 |
-|$$EA$$       | Activation Energy (ev)                          |
+| Parameter    | Description                                                                                                                 |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------|
+| $$hours$$    | Dictionary of temperature's and time at temperature in hours { Temperature as Key: Time at Temperature in Hours as Value }  |
+| $$T_{eval}$$ | Stress Set Point for evaluation                                                                                             |
+| $$EA$$       | Activation Energy (ev)                                                                                                      |
 
 **Output:**
 
-| Variable | Description |
-|----------| ----------- |
-|$$H_{equivalent}$$   | Equivalent Number of Hours |
+| Variable           | Description                |
+|--------------------|----------------------------|
+| $$H_{equivalent}$$ | Equivalent Number of Hours |
 
 **Example:**
 
@@ -170,17 +170,17 @@ $$AF = \frac{S_{use}}{S_{acc}}^{n}$$
 
 **Input Parameters:**
 
-| Parameter    | Description |
-|--------------| ----------- |
-|$$S_{acc}$$  | Accelerated Test S |
-|$$S_{use}$$  | Normal Operating/Field Stress S |
-|$$n$$        | Model Exponent |
+| Parameter   | Description                     |
+|-------------|---------------------------------|
+| $$S_{acc}$$ | Accelerated Test S              |
+| $$S_{use}$$ | Normal Operating/Field Stress S |
+| $$n$$       | Model Exponent                  |
 
 **Output:**
 
-| Variable | Description |
-|----------| ----------- |
-|$$AF$$   | Acceleration Factor |
+| Variable | Description         |
+|----------|---------------------|
+| $$AF$$   | Acceleration Factor |
 
 **Example:**
 
@@ -200,11 +200,11 @@ $$AF = \frac{RH_{use}}{RH_{acc}} * \exp(\frac{-EA}{k}(\frac{1}{T_{use}+ 273.15} 
 
 | Parameter    | Description |
 |--------------| ----------- |
-|$$EA$$       | Activation Energy (ev) |
-|$$T_{acc}$$  | Test Temperature (°C) |
-|$$T_{use}$$  | Field Temperature (°C) |
-|$$RH_{use}$$ | Field Relative Humidity (%) |
-|$$RH_{acc}$$ | Test Relative Humidity (%) |
+| $$EA$$       | Activation Energy (ev) |
+| $$T_{acc}$$  | Test Temperature (°C) |
+| $$T_{use}$$  | Field Temperature (°C) |
+| $$RH_{use}$$ | Field Relative Humidity (%) |
+| $$RH_{acc}$$ | Test Relative Humidity (%) |
 
 **Output:**
 
