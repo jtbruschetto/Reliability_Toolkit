@@ -5,13 +5,16 @@
 2. [Functions](#functions)
    1. [Accelerated Reliability Models](#Accelerated_Reliability)
       1. [Coffin-Manson](#Coffin-Manson_Accelerated_Reliability_Model)
-   2. [Classical Test Design](#Classical Test Design)
-   3. [Reliability Dataclasses](#Reliability Dataclasses)
-   4. [Reliability Demonstration](#Reliability Demonstration)
-   5. [Reliability Functions](#Reliability Functions)
-   6. [Reliability Target Conversion](#Reliability Target Conversion)
-   7. [System Reliability](#System Reliability)
-   8. [Time Series Data Analysis](#Time Series Analysis)
+      2. [Arrhenius](#Arrhenius_Accelerated_Reliability_Model)
+      3. [Inverse Power Law](#Inverse_Power_Law_Accelerated_Reliability_Model)
+      4. [Peck](#Peck_Accelerated_Reliability_Model)
+   2. [Classical Test Design](#Classical_Test_Design)
+   3. [Reliability Dataclasses](#Reliability_Dataclasses)
+   4. [Reliability Demonstration](#Reliability_Demonstration)
+   5. [Reliability Functions](#Reliability_Functions)
+   6. [Reliability Target Conversion](#Reliability_Target_Conversion)
+   7. [System Reliability](#System_Reliability)
+   8. [Time Series Data Analysis](#Time_Series_Analysis)
    9. [Utilities](#Utilities)
 3. [Apps](#apps)
 
@@ -90,25 +93,25 @@ coffin_manson_cycles_conversion(cycles, dt_eval=100, cm_exp=2)
 
 
 
-#### Arrhenius Accelerated Reliability Model <a name="Arrhenius Accelerated Reliability Model"></a>
+#### Arrhenius Accelerated Reliability Model <a name="Arrhenius_Accelerated_Reliability_Model"></a>
 
-#### Inverse Power Law Accelerated Reliability Model <a name="Inverse Power Law Accelerated Reliability Model"></a>
+#### Inverse Power Law Accelerated Reliability Model <a name="Inverse_Power_Law_Accelerated_Reliability_Model"></a>
 
-#### Peck Accelerated Reliability Model <a name="Peck Accelerated Reliability Model"></a>
+#### Peck Accelerated Reliability Model <a name="Peck_Accelerated_Reliability_Model"></a>
 
-### Classical Test Design <a name="Classical Test Design"></a>
+### Classical Test Design <a name="Classical_Test_Design"></a>
 
-### Reliability Dataclasses <a name="Reliability Dataclasses"></a>
+### Reliability Dataclasses <a name="Reliability_Dataclasses"></a>
 
-### Reliability Demonstration <a name="Reliability Demonstration"></a>
+### Reliability Demonstration <a name="Reliability_Demonstration"></a>
 
-### Reliability Functions <a name="Reliability Functions"></a>
+### Reliability Functions <a name="Reliability_Functions"></a>
 
-### Reliability Target Conversion <a name="Reliability Target Conversion"></a>
+### Reliability Target Conversion <a name="Reliability_Target_Conversion"></a>
 
-### System Reliability <a name="System Reliability"></a>
+### System Reliability <a name="System_Reliability"></a>
 
-### Time Series Data Analysis <a name="Time Series Analysis"></a>
+### Time Series Data Analysis <a name="Time_Series_Analysis"></a>
 
 ### Utilities <a name="Utilities"></a>
 
