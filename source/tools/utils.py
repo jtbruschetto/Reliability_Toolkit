@@ -25,3 +25,21 @@ def get_range_array( target, axis: str | None = None, levels=100, min=True):
         else:
             axis_range = np.linspace(0, (target//5 + 1)*5 * 2, levels, endpoint=False)
     return axis_range
+
+def seconds_to_minutes(seconds):
+    return seconds / 60
+
+def seconds_to_hours(seconds):
+    return seconds / 3600
+
+def minutes_to_hours(minutes):
+    return minutes / 60
+
+def minutes_to_seconds(minutes):
+    return minutes * 60
+
+def hours_to_minutes(hours):
+    return hours * 60
+
+def hours_to_seconds(hours):
+    return hours * 3600

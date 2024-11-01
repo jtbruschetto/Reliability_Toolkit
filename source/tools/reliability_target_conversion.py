@@ -84,7 +84,7 @@ class MRpTVAtYear:
 
     def __post_init__(self):
         self.mrr = self.mrptv / 1_000
-        self.eta = eta_mrr_optimization(beta=self.beta, mrr_year=self.mrptv_year, mrr_desired=self.mrr, gamma=self.gamma, mode=self.mode)
+        self.eta = eta_mrr_optimization(beta=self.beta, mrr_year=self.mrptv_year, mrr_desired=self.mrr, gamma=self.gamma, mode=self.mode, show_plot=True)
         self.reliability_table = calculate_reliability_from_mrr(beta=self.beta, eta=self.eta, gamma=self.gamma, mode=self.mode)
         self.reliability_table = self.reliability_table.join(calculate_unreliability_by_year(beta=self.beta, eta=self.eta, gamma=self.gamma))
         self.reliability_table = self.reliability_table.join(calculate_failure_rate_by_year(beta=self.beta, eta=self.eta, gamma=self.gamma))
