@@ -17,7 +17,7 @@ def coffin_manson_acceleration_factor(dt_acc: float, dt_use: float, cm_exp: floa
     :param cm_exp: Coffin Manson Exponent
     :return: Acceleration Factor
     """
-    return (dt_acc / dt_use) ** cm_exp
+    return (dt_acc / dt_use) ** cm_exp if dt_use != 0 else 0
 
 def coffin_manson_cycles_conversion(cycles:dict[float, float], dt_eval:float, cm_exp:float) -> int:
     """
@@ -36,7 +36,7 @@ def coffin_manson_cycles_conversion(cycles:dict[float, float], dt_eval:float, cm
     test_cycles = 0
     for dt_use, count in cycles.items():
         test_cycles += count / coffin_manson_acceleration_factor(dt_eval, dt_use, cm_exp)
-    return math.ceil(test_cycles)
+    return test_cycles
 
 def arrhenius_acceleration_factor(ea: float, t_acc: float, t_use: float) -> float:
     """
