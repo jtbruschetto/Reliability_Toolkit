@@ -7,6 +7,9 @@ def coffin_manson_acceleration_factor(dt_acc: float, dt_use: float, cm_exp: floa
     Coffin Manson Model is used for Temperature Cycling Tests
 
     the Acceleration equation is typically written as: AF = (dt_acc / dt_use) ** cm_exp
+
+    if dt_use == 0: return 0
+
     "AF" is the acceleration factor (R2/R1)
     "dt_acc" is the temperature delta exercised in the accelerated test
     "dt_use" is the temperature delta seen in the field/use case
