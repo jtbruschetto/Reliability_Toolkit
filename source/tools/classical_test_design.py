@@ -20,6 +20,28 @@ class ClassicalTestDesign:
         **kwargs
 ):
         # Initialize Parameters
+        """
+        Initialize the ClassicalTestDesign object.
+
+        This class allows you to determine key parameters for designing
+        reliability tests based on Classical Test Theory (CTT).
+        You can calculate one unknown parameter (reliability, confidence,
+        failures, sample size, or life ratio) by providing the others.
+        It also provides methods for updating parameters and visualizing
+        the relationships between them.
+
+        At least one of reliability, confidence, failures, sample_size, life_ratio must be None.
+        The object will then calculate the missing parameter.
+
+        :param reliability: The reliability target (0-1)
+        :param confidence: The confidence interval (1 - alpha)
+        :param failures: The allowed/observed number of failures
+        :param sample_size: The number of samples on test
+        :param life_ratio: The ratio of test time vs service life
+        :param beta: The component Weibull shape parameter
+        :param kwargs: keyword arguments passed to the calculation functions
+        :raises ValueError: if too many arguments are provided
+        """
         self.reliability = kwargs['reliability'] if 'reliability' in kwargs else reliability
         self.confidence = kwargs['confidence'] if 'confidence' in kwargs else confidence
         self.failures = kwargs['failures'] if 'failures' in kwargs else failures

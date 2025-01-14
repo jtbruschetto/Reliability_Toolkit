@@ -1,3 +1,5 @@
+from utils import timer_wrapper
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -451,5 +453,7 @@ if __name__ == '__main__':
     # print('MRR Summary from Reliability')
     # print(mrr_df)
     #
-    eta_from_mrr = eta_mrr_optimization(mrr_desired=0.0001, mrr_year=3, beta=.5, show_plot=True)
+
+    eta_from_mrr = eta_mrr_optimization(mrr_desired=0.0001, mrr_year=3, beta=2.5, show_plot=True)
     print(f'Optimized Eta: {eta_from_mrr}')
+

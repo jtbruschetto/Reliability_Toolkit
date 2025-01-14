@@ -1,4 +1,17 @@
 import numpy as np
+import time
+
+''' Timer Function Wrapper for Evaluation'''
+
+def timer_wrapper(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        elapsed = end - start
+        print(f'Time taken for {func.__name__}: {elapsed:.6f} seconds')
+        return result
+    return wrapper
 
 
 def get_range_array( target, axis: str | None = None, levels=100, min=True):
