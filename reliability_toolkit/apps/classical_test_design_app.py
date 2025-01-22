@@ -1,8 +1,7 @@
 # global imports
-import numpy as np
 
 import ttkbootstrap as tb
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import X, LEFT, TOP, BOTTOM, BOTH
 from ttkbootstrap.tooltip import ToolTip
 import tkinter as tk
 
@@ -10,7 +9,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 # local imports
-from source.tools.classical_test_design import ClassicalTestDesign
+from reliability_toolkit.tools.classical_test_design import ClassicalTestDesign
+
+__all__ = ['App']
+
 """ MAIN APP CLASS """
 
 
@@ -48,8 +50,8 @@ class Cursor:
 
 
 class App(tb.Toplevel):
-    def __init__(self, title):
-        super().__init__(title=title)
+    def __init__(self):
+        super().__init__(title="Reliability Test Sample Size Selection App")
         print('Initializing Reliability Test Sample Size Selector App')
 
         # Initialize Modes
@@ -250,7 +252,7 @@ class App(tb.Toplevel):
                 self.variables.pop('Allowable # of Failures')
             else:
                 self.variables['Allowable # of Failures'] = 'failures'
-        except:
+        except TypeError:
             pass
         self.variable_keys = list(self.variables.keys())
         self.pf.view_selector.update_plot_option_menu()
@@ -533,4 +535,4 @@ class ViewSelector(tb.Frame):
 if __name__ == "__main__":
     root = tb.Window(themename='cosmo')
     root.withdraw()
-    App("Reliability Test Sample Size Selection App").mainloop()
+    App().mainloop()

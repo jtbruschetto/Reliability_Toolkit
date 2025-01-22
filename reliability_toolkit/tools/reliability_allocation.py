@@ -1,7 +1,22 @@
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional, List
 import pandas as pd
+
+__all__ = [
+    'WEIGHT_SCALES',
+    "SeverityWeight",
+    "MaintenanceEffortWeight",
+    "TechnicalMaturityWeight",
+    "ImprovementOpportunityWeight",
+    "Ranking",
+    "ComponentAllocation",
+    "SystemAllocation",
+    "ReferenceAllocation",
+    "ReferenceToNewComponent",
+    "MRRAllocation",
+    "equivalent_mrr_allocation",
+]
 
 WEIGHT_SCALES = {
     "severity": .4,

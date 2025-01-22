@@ -1,21 +1,18 @@
 # global imports
-from math import gamma
 
 import ttkbootstrap as tb
 from ttkbootstrap.tableview import Tableview
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import X, Y, LEFT, TOP, BOTTOM, BOTH, PRIMARY
 from ttkbootstrap.tooltip import ToolTip
-import tkinter as tk
-
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from matplotlib.figure import Figure
 
 # local imports
-from source.tools.reliability_target_conversion import MRpTVAtYear, ReliabilityAtYear
+from reliability_toolkit.tools.reliability_target_conversion import MRpTVAtYear, ReliabilityAtYear
+
+__all__ = ['App']
 
 class App(tb.Toplevel):
-    def __init__(self, title):
-        super().__init__(title=title)
+    def __init__(self):
+        super().__init__(title="Reliability/MRpTV Target Conversion")
         print('Initializing Reliability/MRpTV Conversion App')
 
         # Initialize Modes
@@ -23,7 +20,7 @@ class App(tb.Toplevel):
             'upto_year',
             'at_year',
         ]
-        self.mode = tb.StringVar(value=self.modes[0])
+        self.mode = tb.StringVar(value=str(self.modes[0]))
 
         # Instantiate Variables
         self.reliability =tb.DoubleVar()
@@ -324,4 +321,4 @@ class DropDownSubFrame(tb.Frame):
 if __name__ == "__main__":
     root = tb.Window(themename='cosmo')
     root.withdraw()
-    App("Reliability/MRpTV Target Conversion").mainloop()
+    App().mainloop()

@@ -1,6 +1,11 @@
 import math
 from scipy.stats import chi2
 
+__all__ = [
+    'demonstrated_reliability',
+    'combined_demonstrated_reliability',
+]
+
 def demonstrated_reliability(confidence: float, beta=0., zbar=0., sample_size=0, life_ratio=1., failures=0, **_kwargs):
     """
     :param confidence: between 0 - 1

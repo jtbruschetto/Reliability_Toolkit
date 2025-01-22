@@ -2,7 +2,15 @@ import math
 import numpy as np
 from scipy.stats import chi2
 
-from pprint import pprint
+from rich import print
+
+__all__ = [
+    "rel_dictionary",
+    "z_bar",
+    "r_l",
+    "r_u",
+    "r_p",
+    "n_field"]
 
 
 def rel_dictionary(confidence: float, beta: float, zbar: float, failures: int, service_years: int, r_g: float,
@@ -104,6 +112,6 @@ def n_field(service_yrs: int, r: float, beta: float):
 
 
 if __name__ == "__main__":
-    pprint(rel_dictionary(.6, 2.5, 365, 1,10, .98))
-    pprint(rel_dictionary(.6, 2.5, 100, 1, 10, .98))
-    pprint(rel_dictionary(.6, 2.5, 20, 1, 10, .98))
+    print(rel_dictionary(.6, 2.5, 365, 1,10, .98))
+    print(rel_dictionary(.6, 2.5, 100, 1, 10, .98))
+    print(rel_dictionary(.6, 2.5, 20, 1, 10, .98))

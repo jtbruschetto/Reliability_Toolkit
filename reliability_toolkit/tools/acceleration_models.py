@@ -3,6 +3,8 @@ from typing import Optional
 
 import math
 
+__all__ = ['CoffinManson', 'Arrhenius', 'InversePowerLaw', 'Peck']
+
 @dataclass
 class CoffinManson:
     """
@@ -75,7 +77,7 @@ class Arrhenius:
     :param ea: Activation Energy
     """
     ea: float  # Activation Energy
-    t_rise: Optional[float]
+    t_rise: Optional[float] = None
 
     def __post_init__(self):
         self.model = 'Arrhenius'

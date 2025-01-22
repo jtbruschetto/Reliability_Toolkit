@@ -6,7 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 #local imports
-from source.tools.utils import get_range_array
+from reliability_toolkit.tools.utils import get_range_array
+
+__all__ = ['ClassicalTestDesign', 'calculate_reliability', 'calculate_confidence', 'calculate_sample_size', 'calculate_life_ratio', 'calculate_allowable_failures']
 
 class ClassicalTestDesign:
     def __init__(
@@ -54,7 +56,7 @@ class ClassicalTestDesign:
 
         # Check To Make sure 1 Argument is unknown for calculation
         if len([x for x in list(self.__dict__.values()) if x is None])>1:
-            raise ValueError(f'Insufficient arguments provided, Too many arguments to solve for')
+            raise ValueError('Insufficient arguments provided, Too many arguments to solve for')
 
         # Solve for Unknown Argument
         if self.reliability is None:

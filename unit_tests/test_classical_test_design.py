@@ -1,6 +1,6 @@
 import unittest
 
-from source.tools.classical_test_design import *
+from reliability_toolkit.tools.classical_test_design import calculate_reliability
 
 class TestCalculateReliability(unittest.TestCase):
 

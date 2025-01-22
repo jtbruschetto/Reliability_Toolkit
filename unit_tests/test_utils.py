@@ -1,8 +1,6 @@
 import unittest
 
-import numpy as np
-
-from source.tools import utils
+from reliability_toolkit.tools import utils
 
 class TestUtils(unittest.TestCase):
     def test_get_range_array(self):
