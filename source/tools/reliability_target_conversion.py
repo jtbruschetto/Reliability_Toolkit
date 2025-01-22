@@ -1,4 +1,4 @@
-from utils import timer_wrapper
+# from tools.utils import timer_wrapper
 
 import numpy as np
 import pandas as pd
@@ -222,6 +222,7 @@ def mrr_calculation_function(beta: float, eta: float, gamma: float, month: int, 
 def calculate_mrr_from_reliability(beta: float, eta: float, eta_lb=-0.1, eta_ub=-0.1, gamma=0, years=15,
                                    mode: Literal['at_year', 'upto_year'] = 'upto_year', **_kwargs):
     """
+    This function calculates Mean Repair Rate (MRR) and related metrics from reliability data using Weibull parameters. It takes in Weibull shape (beta), scale (eta), location (gamma), and other parameters, and returns a pandas DataFrame with MRR, unreliability, and failure rate data for each year up to the specified years parameter. The function also accepts optional lower and upper bound confidence intervals for the scale parameter (eta_lb and eta_ub).
 
     :param beta:  Component Weibull Shape parameter.
     :param eta: Weibull Scale Parameter
